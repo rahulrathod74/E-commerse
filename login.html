@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Login Page</h1>
+    <form >
+        <input type="email" id="email" placeholder="Enter Email">
+        <input type="password" id="password" placeholder="Enter password">
+        <button type="submit" onClick="login()">login</button>
+    </form>
+
+    <script>
+
+        async function login(){
+            event.preventDefault()
+            let email=document.getElementById("email").value
+            let password=document.getElementById("password").value;
+
+            let res=await fetch("http://localhost:3000/users");
+            let data=await res.json()
+            console.log(data);
+            let flag=false
+            data.forEach((ele,i)=>{
+                if(ele.email==email){
+                    if(ele.password==password){
+                       
+                       localStorage.setItem("loginUser",JSON.stringify(ele))
+                        alert("login sucessfull")
+                        window.location.href="./Product.html"
+                    }else{
+                        alert('wrong Password')
+                    }
+                }
+            })
+            if(flag==true){
+                alert("user Not Found,please Register")
+            }
+        }
+       
+
+    </script>
+</body>
+</html>

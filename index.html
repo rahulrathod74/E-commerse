@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>signUp</title>
+  </head>
+  <body>
+    <h3>Signup Here...</h3>
+    <form>
+      <input id="name" type="text" placeholder="Enter name" />
+      <input id="email" type="email" placeholder="Enter email" />
+      <input id="Password" type="password" placeholder="Enter password" />
+      <input type="button"  onClick="signUp()" value="signup">
+      
+    </form>
+    <script>
+      function signUp() {
+        event.preventDefault();
+        let name = document.getElementById("name").value;
+        let email = document.getElementById("email").value;
+        let password = document.getElementById("Password").value;
+        let user = { name, email, password };
+
+        fetch("http://localhost:3000/users", {
+          method: "POST",
+          headers: {
+            "content-Type": "application/json",
+          },
+          body: JSON.stringify(user),
+        })
+          .then(() => {
+            alert("Signup sucessfull ,Please login ");
+            document.location.href = "./login.html";
+           // window.location.href = "https://students.masaischool.com/";
+          })
+          .catch((err) => {
+            console.log("err", err);
+          });
+          
+      }
+
+      async function getData(){
+        let res = await  fetch("http://localhost:3000/users")
+        let data = await res.json()
+        console.log(data)
+      }
+      getData()
+    </script>
+  </body>
+</html>
